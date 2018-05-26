@@ -11,7 +11,7 @@ export default class SearchContainer extends Component {
     constructor(props) {
         super(props);
         this.state={
-            text: null,
+            term: null,
             columns: 1
         }
     }
@@ -21,8 +21,8 @@ export default class SearchContainer extends Component {
                 <Text>Search term</Text>
                 <TextInput
                     style={styles.input}
-                    value={this.state.text}
-                    onChangeText={(text)=>this.handleChange(text)}
+                    value={this.state.term}
+                    onChangeText={(term)=>this.handleChange(term)}
                     placeholder='what field are you interested in?'
                     underlineColorAndroid='transparent'
                 />
@@ -48,14 +48,14 @@ export default class SearchContainer extends Component {
                 this.setState({columns: data});
                 break;
             case 'string' : 
-                this.setState({text: data});
+                this.setState({term: data});
                 break;
             default: 
                 return false;
         }
     }
     handlePress=() => {
-        this.props.navigation.navigate('Display')
+        this.props.navigation.navigate('Display', this.state)
     }
 }
 

@@ -5,21 +5,15 @@ import {
     StyleSheet, 
     Button 
 } from 'react-native';
+import { DisplayContainer } from './../containers';
 
 export default class DisplayScreen extends Component {
     render() {
+        let { navigation: nav } = this.props
+        let term = nav.getParam('term');
+        let columns = nav.getParam('columns');
         return (
-            <View style={styles.container}>
-                <Text>Display Screen</Text>
-            </View>
-        )
+            <DisplayContainer term={term} columns={columns}  />
+        )  
     }
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
-    }
-  });
