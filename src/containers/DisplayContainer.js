@@ -15,26 +15,23 @@ class DisplayContainer extends Component {
         super(props);
     }
     componentDidMount() {
-        console.log(this.props);
         this.props.FetchingImages(this.props.term); 
-        console.log(this.props);
     }
     render() {
-        let images = [
-            {url: 'http://www.catster.com/wp-content/uploads/2017/08/A-fluffy-cat-looking-funny-surprised-or-concerned.jpg'},
-            {url: 'http://www.catster.com/wp-content/uploads/2017/08/A-fluffy-cat-looking-funny-surprised-or-concerned.jpg'},
-            {url: 'http://www.catster.com/wp-content/uploads/2017/08/A-fluffy-cat-looking-funny-surprised-or-concerned.jpg'},
-            {url: 'http://www.catster.com/wp-content/uploads/2017/08/A-fluffy-cat-looking-funny-surprised-or-concerned.jpg'},
-            {url: 'http://www.catster.com/wp-content/uploads/2017/08/A-fluffy-cat-looking-funny-surprised-or-concerned.jpg'},
-            {url: 'http://www.catster.com/wp-content/uploads/2017/08/A-fluffy-cat-looking-funny-surprised-or-concerned.jpg'},
-            {url: 'http://www.catster.com/wp-content/uploads/2017/08/A-fluffy-cat-looking-funny-surprised-or-concerned.jpg'},
-            {url: 'http://www.catster.com/wp-content/uploads/2017/08/A-fluffy-cat-looking-funny-surprised-or-concerned.jpg'},
-            {url: 'http://www.catster.com/wp-content/uploads/2017/08/A-fluffy-cat-looking-funny-surprised-or-concerned.jpg'}
-        ];
         let { width } = Dimensions.get('window');
+        let { app } = this.props;
+
+        if (app.isFetching) {
+            return (
+                <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                    <Text>Loading...</Text>
+                </View>
+            )
+        } 
+
         return (
             <ScrollView contentContainerStyle={styles.container}> 
-                {images.map((item, index)=>this.renderImage(item, index, width))}
+                {app.data.map((item, index)=>this.renderImage(item, index, width))}
             </ScrollView>
         );
     }
@@ -53,7 +50,7 @@ class DisplayContainer extends Component {
                     marginBottom: 5
                 }}>
                 <Image  
-                    source={{uri: image.url}}
+                    source={{uri: image.contentUrl}}
                     style={{width: width-5, height: width-5}}
                     resizeMode='contain'
                 />

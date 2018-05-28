@@ -9,15 +9,13 @@ import {
 
 export default function FetchingImages(query) {
     return dispatch => {
-        dispatch({ type: FETCHING_IMAGES });
+        dispatch({ type: FETCHING_IMAGES, payload: query });
         
         let response = fetch(bingApiUrl + `?q=${query}&subscription-key=${bingKey}`);
         return response
             .then( res => res.json() ) 
             .then (data => {
-                console.log('data',data)
                 dispatch({ type: FETCHING_IMAGES_SUCCESS, payload: data.value})
-
             })
     }
 }
