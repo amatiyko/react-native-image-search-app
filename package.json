@@ -20,8 +20,15 @@
   },
   "dependencies": {
     "expo": "^27.0.1",
+    "free-google-image-search": "^1.0.0",
     "react": "16.3.1",
     "react-native": "~0.55.2",
-    "react-navigation": "^2.0.4"
+    "react-navigation": "^2.0.4",
+    "react-redux": "^5.0.7",
+    "redux": "^4.0.0",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.2.0",
+    "remote-redux-devtools": "^0.5.12",
+    "remotedev-rn-debugger": "^0.8.3"
   }
 }
