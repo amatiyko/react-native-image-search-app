@@ -5,7 +5,9 @@ import {
     TextInput,
     Button,
     Slider, 
-    StyleSheet } from 'react-native';
+    StyleSheet,
+    AsyncStorage
+} from 'react-native';
 
 export default class SearchContainer extends Component {
     constructor(props) {
@@ -15,6 +17,9 @@ export default class SearchContainer extends Component {
             columns: 1
         }
     }
+    componentDidMount() {
+        this.getKey();
+    }
     render() {
         return (
             <View style={styles.container}>
@@ -22,7 +27,7 @@ export default class SearchContainer extends Component {
                 <TextInput
                     style={styles.input}
                     value={this.state.term}
-                    onChangeText={(term)=>this.handleChange(term)}
+                    onChangeText={(term)=>this.setState({term})}
                     placeholder='what field are you interested in?'
                     underlineColorAndroid='transparent'
                 />
@@ -33,7 +38,7 @@ export default class SearchContainer extends Component {
                     value={this.state.columns}
                     maximumValue={5}
                     step={1}
-                    onValueChange={(value)=>this.handleChange(value)}
+                    onValueChange={(columns)=>this.setState({columns})}
                 />
                 <Button
                     title='Search'
@@ -42,21 +47,26 @@ export default class SearchContainer extends Component {
             </View>
         );
     }
-    handleChange=(data) => {
-        switch (typeof data) {
-            case 'number' :
-                this.setState({columns: data});
-                break;
-            case 'string' : 
-                this.setState({term: data});
-                break;
-            default: 
-                return false;
-        }
-    }
     handlePress=() => {
+        this.saveKey(this.state.term);
         this.props.navigation.navigate('Display', this.state)
     }
+    async getKey() {
+        try {
+            const value = await AsyncStorage.getItem('@MySuperStore:key');
+            this.setState({term: value});
+            console.log('123123123', value)
+        } catch (error) {
+            console.log("Error retrieving data" + error);
+        }
+    }
+    saveKey = async (value) => {
+        try {
+            await AsyncStorage.setItem('@MySuperStore:key', value);
+        } catch (error) {
+            console.log("Error saving data" + error);
+        }
+      }
 }
 
 const styles = StyleSheet.create({

@@ -2,17 +2,24 @@ import React, { Component } from 'react';
 import { 
     View,
     ScrollView,
-    Text, 
-    Image,
+    Text,
     StyleSheet,
-    Dimensions
+    TouchableOpacity,
+    Modal,
+    Dimensions,
+    AsyncStorage
 } from 'react-native';
+import Image from 'react-native-image-progress';
 import { FetchingImages } from './../Actions';
 import { connect } from 'react-redux';
 
 class DisplayContainer extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            showModal: false,
+            modalContent: null
+        }
     }
     componentDidMount() {
         this.props.FetchingImages(this.props.term); 
@@ -30,32 +37,45 @@ class DisplayContainer extends Component {
         } 
 
         return (
-            <ScrollView contentContainerStyle={styles.container}> 
-                {app.data.map((item, index)=>this.renderImage(item, index, width))}
-            </ScrollView>
+                <ScrollView> 
+                    <View style={styles.container}>
+                        {app.data.map((item, index)=>this.renderImage(item, index, width))}
+                    </View>
+                </ScrollView>
         );
     }
     renderImage=(image, index, screenWidth) => {
         let width = screenWidth / (this.props.columns) - 5;
-        return (
-            <View 
-                key={index}
-                style={{
-                    width, 
-                    justifyContent: 'center', 
-                    alignItems: 'center', 
-                    borderColor: 'black', 
-                    borderWidth: 1, 
-                    marginTop: 5, 
-                    marginBottom: 5
-                }}>
-                <Image  
-                    source={{uri: image.contentUrl}}
-                    style={{width: width-5, height: width-5}}
-                    resizeMode='contain'
-                />
-            </View>
-        )
+        var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
+        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.?)+[a-z]{2,}|'+ // domain name
+        '((\\d{1,3}\\.){3}\\d{1,3}))'+ // OR ip (v4) address
+        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
+        '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
+        '(\\#[-a-z\\d_]*)?$','i'); // fragment locator
+        if (pattern.test(image.contentUrl)) {
+            return (
+                <View 
+                    key={index}
+                    style={{
+                        width, 
+                        justifyContent: 'center', 
+                        alignItems: 'center', 
+                        borderColor: 'black', 
+                        borderWidth: 1, 
+                        marginTop: 5, 
+                        marginBottom: 5
+                    }}>
+                        <Image  
+                            source={{uri: image.contentUrl}}
+                            style={{width: width, height: width}}
+                            resizeMode='cover'/>
+                </View>
+            )
+        }
+        return false;
+    }
+    handlePress = (modalContent) => {
+        this.setState({showModal: !this.state.showModal, modalContent})
     }
 }
 
