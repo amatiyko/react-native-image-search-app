@@ -56,15 +56,7 @@ class DisplayContainer extends Component {
             return (
                 <View 
                     key={index}
-                    style={{
-                        width, 
-                        justifyContent: 'center', 
-                        alignItems: 'center', 
-                        borderColor: 'black', 
-                        borderWidth: 1, 
-                        marginTop: 5, 
-                        marginBottom: 5
-                    }}>
+                    style={[{width}, styles.imageContainer ]}>
                         <Image  
                             source={{uri: image.contentUrl}}
                             style={{width: width, height: width}}
@@ -85,6 +77,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row', 
         flexWrap: 'wrap', 
         justifyContent: 'space-around'
+    },
+    imageContainer: {
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        borderColor: 'black', 
+        borderWidth: 1, 
+        marginTop: 5, 
+        marginBottom: 5
     }
 });
 
