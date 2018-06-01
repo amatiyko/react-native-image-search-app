@@ -27,6 +27,11 @@ image are fetched from bing image search api;
 
 api url: https://api.cognitive.microsoft.com/bing/v7.0/images/search
 
-registered on : 
+registered on : 28/29 may
 
-free until : 
+free : ~ 7 days
+
+![screenshot](screen_1.jpg?raw=true "Screenshot")
+![screenshot](screen_2.jpg?raw=true "Screenshot")
+![screenshot](screen_3.jpg?raw=true "Screenshot")
+![screenshot](screen_4.jpg?raw=true "Screenshot")
